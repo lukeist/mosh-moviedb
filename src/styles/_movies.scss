@@ -1,0 +1,34 @@
+table {
+  border: none;
+  table-layout: fixed;
+  width: 600px;
+}
+
+th,
+td {
+  text-align: left;
+  border: none;
+  width: 100px;
+  overflow: hidden;
+}
+
+.movies {
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: left;
+  margin-left: 20%;
+  margin-top: 2rem;
+  min-height: 30vh;
+}
+
+.table-head {
+  font-size: 1.3rem;
+  background: darkolivegreen;
+}
+.pagination {
+  margin-left: 20%;
+  button {
+    width: 1.5rem;
+  }
+}
