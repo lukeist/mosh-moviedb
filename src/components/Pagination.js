@@ -1,23 +1,29 @@
-import { useState, useEffect } from "react";
-
 const Pagination = ({
   moviesOnPages,
-  filteredMovies,
   setFilteredMovies,
   genreStatus,
   moviesOnPagesGenre,
   setFilteredMoviesGenre,
+  setCurrentPage,
 }) => {
+  const setFilteredMoviesGenreHandler = (page) => {
+    setFilteredMoviesGenre(page);
+    setCurrentPage(moviesOnPagesGenre.indexOf(page));
+  };
+  const setFilteredMoviesHandler = (page) => {
+    setFilteredMovies(page);
+    setCurrentPage(moviesOnPages.indexOf(page));
+  };
   return (
     <div>
       {genreStatus
         ? moviesOnPagesGenre.map((page) => (
-            <button onClick={() => setFilteredMoviesGenre(page)}>
+            <button onClick={() => setFilteredMoviesGenreHandler(page)}>
               {moviesOnPagesGenre.indexOf(page) + 1}
             </button>
           ))
         : moviesOnPages.map((page) => (
-            <button onClick={() => setFilteredMovies(page)}>
+            <button onClick={() => setFilteredMoviesHandler(page)}>
               {moviesOnPages.indexOf(page) + 1}
             </button>
           ))}
@@ -26,22 +32,3 @@ const Pagination = ({
 };
 
 export default Pagination;
-
-// {
-
-//   {moviesOnPagesGenre.map((page) =>
-//     <button onClick={() => setFilteredMoviesGenre(page)}>
-//       {moviesOnPagesGenre.indexOf(page) + 1}
-//     </button>}
-//     :
-//   {moviesOnPages.map((page) => (
-//     <span>
-//       {moviesOnPages.length === 1 ? (
-//         ""
-//       ) : (
-//         <button onClick={() => setFilteredMovies(page)}>
-//           {moviesOnPages.indexOf(page) + 1}
-//         </button>
-//       )}
-//     </span>
-//   ))}}

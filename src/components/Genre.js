@@ -1,23 +1,13 @@
-import { useEffect, useState } from "react";
-
 const Genre = ({
   genreItem,
   allMovies,
-  filteredMovies,
-  setFilteredMovies,
-  moviesOnPages,
-  setMoviesOnPages,
-  itemPerPage,
-  itemsInGerne,
-  setItemInGerne,
-  filteredMoviesGenre,
   setFilteredMoviesGenre,
-  moviesOnPagesGenre,
   setMoviesOnPagesGenre,
-  genreMovies,
   setGenreMovies,
   setGenreStatus,
   getMovieList,
+  setGenreType,
+  setCurrentPage,
 }) => {
   const genresFiltered = () => {
     // Set depended state to be executed after the first
@@ -29,6 +19,8 @@ const Genre = ({
     setMoviesOnPagesGenre(temp2);
     setFilteredMoviesGenre(temp2[0]);
     setGenreStatus(true);
+    setGenreType(genreItem._id);
+    setCurrentPage(0);
   };
 
   return <button onClick={genresFiltered}>{genreItem.name}</button>;

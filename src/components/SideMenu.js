@@ -1,32 +1,25 @@
-import { getGenres } from "./fakeGenreService";
 import Genre from "./Genre";
+import { useSelector } from "react-redux";
 
 const SideMenu = ({
   allMovies,
-  filteredMovies,
   setFilteredMovies,
-  moviesOnPages,
   setMoviesOnPages,
-  itemPerPage,
-  genreItem,
-  itemsInGerne,
-  setItemInGerne,
-  filteredMoviesGenre,
   setFilteredMoviesGenre,
-  moviesOnPagesGenre,
   setMoviesOnPagesGenre,
-  genreMovies,
   setGenreMovies,
   setGenreStatus,
   getMovieList,
-  a,
+  setGenreType,
+  setCurrentPage,
 }) => {
-  const genres = getGenres();
+  const genres = useSelector((state) => state.entities.genres);
   const showAllGenres = () => {
     const tempT = [...allMovies];
     setMoviesOnPages(getMovieList(tempT));
     setFilteredMovies(getMovieList(tempT)[0]);
     setGenreStatus(false);
+    setCurrentPage(0);
   };
 
   return (
@@ -37,21 +30,13 @@ const SideMenu = ({
           key={genreItem._id}
           genreItem={genreItem}
           allMovies={allMovies}
-          filteredMovies={filteredMovies}
-          setFilteredMovies={setFilteredMovies}
-          moviesOnPages={moviesOnPages}
-          setMoviesOnPages={setMoviesOnPages}
-          itemPerPage={itemPerPage}
-          itemsInGerne={itemsInGerne}
-          setItemInGerne={setItemInGerne}
-          filteredMoviesGenre={filteredMoviesGenre}
           setFilteredMoviesGenre={setFilteredMoviesGenre}
-          moviesOnPagesGenre={moviesOnPagesGenre}
           setMoviesOnPagesGenre={setMoviesOnPagesGenre}
-          genreMovies={genreMovies}
           setGenreMovies={setGenreMovies}
           setGenreStatus={setGenreStatus}
           getMovieList={getMovieList}
+          setGenreType={setGenreType}
+          setCurrentPage={setCurrentPage}
         />
       ))}
     </div>

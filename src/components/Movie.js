@@ -1,30 +1,69 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as emptyHeart } from "@fortawesome/free-regular-svg-icons";
-import { useState, useEffect } from "react";
-
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { movieRemoved } from "../store/rMovies";
+import store from "../store/configureStore";
 const Movie = ({
-  setIndex,
   movie,
-  allMovies,
-  setAllMovies,
-  filteredMovies,
   setFilteredMovies,
-  moviesOnPages,
   setMoviesOnPages,
+  setFilteredMoviesGenre,
+  setMoviesOnPagesGenre,
+  getMovieList,
+  genreType,
+  genreStatus,
+  currentPage,
+  setCurrentPage,
 }) => {
   const [heart, setHeart] = useState(false);
-
+  const dispatch = useDispatch();
   const movieHearted = () => {
     setHeart(!heart);
   };
 
-  const movieRemoved = () => {
-    setAllMovies(allMovies.filter((item) => item._id !== movie._id));
-    setFilteredMovies(filteredMovies.filter((item) => item._id !== movie._id));
+  const movieRemovedHandler = () => {
+    let currentMovieList = store.getState().entities.movies;
+    let currentMovieListGenre = currentMovieList.filter(
+      (movie) => movie.genre._id === genreType
+    );
+    dispatch(movieRemoved({ _id: movie._id }));
+    if (!genreStatus) {
+      if (getMovieList(currentMovieList)[currentPage].length === 1) {
+        currentMovieList = store.getState().entities.movies;
+        setMoviesOnPages(getMovieList(currentMovieList));
+        const tempPage = currentPage - 1;
+        setCurrentPage(tempPage);
+        setFilteredMovies(getMovieList(currentMovieList)[tempPage]);
+      } else {
+        currentMovieList = store.getState().entities.movies;
+        setMoviesOnPages(getMovieList(currentMovieList));
+        setFilteredMovies(getMovieList(currentMovieList)[currentPage]);
+      }
+    } else {
+      if (getMovieList(currentMovieListGenre)[currentPage].length === 1) {
+        currentMovieList = store.getState().entities.movies;
+        currentMovieListGenre = currentMovieList.filter(
+          (movie) => movie.genre._id === genreType
+        );
+        setMoviesOnPagesGenre(getMovieList(currentMovieListGenre));
+        const tempPage = currentPage - 1;
+        setCurrentPage(tempPage);
+        setFilteredMoviesGenre(getMovieList(currentMovieListGenre)[tempPage]);
+      } else {
+        currentMovieList = store.getState().entities.movies;
+        currentMovieListGenre = currentMovieList.filter(
+          (movie) => movie.genre._id === genreType
+        );
+        setMoviesOnPagesGenre(getMovieList(currentMovieListGenre));
+        setFilteredMoviesGenre(
+          getMovieList(currentMovieListGenre)[currentPage]
+        );
+      }
+    }
   };
 
-  // NEU SO PAGE = X THI KHI XOA CAI CUOI CUNG O PAGE X, PHAI TU DONG NHAY QUA PAGE X-1
   return (
     <tr>
       <th className="movie-title column-1">{movie.title}</th>
@@ -39,7 +78,7 @@ const Movie = ({
         )}
       </th>
       <th className="movie-removed column-6">
-        <button onClick={movieRemoved}>Delete</button>
+        <button onClick={movieRemovedHandler}>Delete</button>
       </th>
     </tr>
   );
