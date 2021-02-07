@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { movieRemoved } from "../store/rMovies";
 import store from "../store/configureStore";
+import { Route, Link } from "react-router-dom";
 const Movie = ({
   movie,
   setFilteredMovies,
@@ -66,7 +67,9 @@ const Movie = ({
 
   return (
     <tr>
-      <th className="movie-title column-1">{movie.title}</th>
+      <th className="movie-title column-1">
+        <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
+      </th>
       <th className="movie-gerne column-2">{movie.genre.name}</th>
       <th className="movie-stock column-3">{movie.numberInStock}</th>
       <th className="movie-rate column-4">{movie.dailyRentalRate}</th>

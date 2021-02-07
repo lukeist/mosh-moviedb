@@ -3,6 +3,12 @@ import Movies from "./components/Movies";
 import { useState } from "react";
 import app from "./styles/app.scss";
 import { useSelector } from "react-redux";
+import TopNav from "./components/TopNav";
+import { Route, Switch, Redirect } from "react-router-dom";
+import Rentals from "./components/Rentals";
+import Customers from "./components/Customers";
+import NotFound from "./components/NotFound";
+import MovieDetails from "./components/MovieDetails";
 
 function App() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -40,36 +46,51 @@ function App() {
 
   return (
     <div className="App">
-      <SideMenu
-        allMovies={allMovies}
-        setFilteredMovies={setFilteredMovies}
-        setMoviesOnPages={setMoviesOnPages}
-        setFilteredMoviesGenre={setFilteredMoviesGenre}
-        setMoviesOnPagesGenre={setMoviesOnPagesGenre}
-        setGenreMovies={setGenreMovies}
-        setGenreStatus={setGenreStatus}
-        getMovieList={getMovieList}
-        setGenreType={setGenreType}
-        setCurrentPage={setCurrentPage}
-      />
-      <Movies
-        genreStatus={genreStatus}
-        allMovies={allMovies}
-        filteredMovies={filteredMovies}
-        setFilteredMovies={setFilteredMovies}
-        setMoviesOnPages={setMoviesOnPages}
-        moviesOnPages={moviesOnPages}
-        index={index}
-        filteredMoviesGenre={filteredMoviesGenre}
-        moviesOnPagesGenre={moviesOnPagesGenre}
-        setMoviesOnPagesGenre={setMoviesOnPagesGenre}
-        setFilteredMoviesGenre={setFilteredMoviesGenre}
-        genreMovies={genreMovies}
-        getMovieList={getMovieList}
-        genreType={genreType}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      <TopNav />
+      <Switch>
+        <Route path={`/movies/:id`} component={MovieDetails} />;
+        {/* {allMovies.map((movie) => {
+          <Route path={`/movies/${movie._id}`} component={MovieDetails} />;
+        })} */}
+        <Route path="/customers" component={Customers}></Route>
+        <Route path="/customers" component={Customers} />
+        <Route path="/rentals" component={Rentals} />
+        <Route path="/movies">
+          <Movies
+            genreStatus={genreStatus}
+            allMovies={allMovies}
+            filteredMovies={filteredMovies}
+            setFilteredMovies={setFilteredMovies}
+            setMoviesOnPages={setMoviesOnPages}
+            moviesOnPages={moviesOnPages}
+            index={index}
+            filteredMoviesGenre={filteredMoviesGenre}
+            moviesOnPagesGenre={moviesOnPagesGenre}
+            setMoviesOnPagesGenre={setMoviesOnPagesGenre}
+            setFilteredMoviesGenre={setFilteredMoviesGenre}
+            genreMovies={genreMovies}
+            getMovieList={getMovieList}
+            genreType={genreType}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+          <SideMenu
+            allMovies={allMovies}
+            setFilteredMovies={setFilteredMovies}
+            setMoviesOnPages={setMoviesOnPages}
+            setFilteredMoviesGenre={setFilteredMoviesGenre}
+            setMoviesOnPagesGenre={setMoviesOnPagesGenre}
+            setGenreMovies={setGenreMovies}
+            setGenreStatus={setGenreStatus}
+            getMovieList={getMovieList}
+            setGenreType={setGenreType}
+            setCurrentPage={setCurrentPage}
+          />
+        </Route>
+        <Route path="/not-found" component={NotFound} />
+        <Redirect from="/" exact to="/movies" />
+        <Redirect to="/not-found" />
+      </Switch>
     </div>
   );
 }

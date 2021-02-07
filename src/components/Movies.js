@@ -159,7 +159,7 @@ const Movies = ({
       </div>
       <div className="pagination">
         <Pagination
-          key={}
+          // key={}
           genreStatus={genreStatus}
           moviesOnPages={moviesOnPages}
           setFilteredMovies={setFilteredMovies}
