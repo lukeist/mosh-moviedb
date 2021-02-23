@@ -1,14 +1,16 @@
 import SideMenu from "./components/SideMenu";
 import Movies from "./components/Movies";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import app from "./styles/app.scss";
 import { useSelector } from "react-redux";
 import TopNav from "./components/TopNav";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Rentals from "./components/Rentals";
 import Customers from "./components/Customers";
-import NotFound from "./components/NotFound";
-import MovieDetails from "./components/MovieDetails";
+import NotFound from "./pages/NotFound";
+import MovieDetailPage from "./pages/MovieDetailPage";
+import LoginPage from "./pages/LoginPage";
+import MovieNewPage from "./pages/MovieNewPage";
 
 function App() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -44,16 +46,25 @@ function App() {
     moviesOnPagesGenre[0]
   );
 
+  useEffect(() => {
+    const updateMovies = getMovieList(allMovies);
+    setMoviesOnPages(updateMovies);
+    setFilteredMovies(updateMovies[currentPage]);
+  }, [allMovies]);
+
   return (
     <div className="App">
       <TopNav />
       <Switch>
-        <Route path={`/movies/:id`} component={MovieDetails} />;
+        <Route path="/movies/new" component={MovieNewPage} />
+        <Route path={`/movies/:id`} component={MovieDetailPage} />;
         {/* {allMovies.map((movie) => {
-          <Route path={`/movies/${movie._id}`} component={MovieDetails} />;
+          <Route path={`/movies/${movie._id}`} component={MovieDetailPage} />;
         })} */}
         <Route path="/customers" component={Customers}></Route>
-        <Route path="/customers" component={Customers} />
+        <Route path="/login">
+          <LoginPage />
+        </Route>
         <Route path="/rentals" component={Rentals} />
         <Route path="/movies">
           <Movies

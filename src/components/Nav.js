@@ -1,8 +1,11 @@
 import store from "../store/configureStore";
+import { useHistory } from "react-router-dom";
 
 const Nav = ({ allMovies, genreStatus, genreMovies, genreType }) => {
+  const history = useHistory();
   return (
     <nav className="nav-bar">
+      <button onClick={() => history.push("/movies/new")}>New Movie</button>
       {genreStatus ? (
         <div>
           {genreMovies.length > 0 ? (

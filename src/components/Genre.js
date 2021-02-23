@@ -21,6 +21,7 @@ const Genre = ({
     setGenreStatus(true);
     setGenreType(genreItem._id);
     setCurrentPage(0);
+    console.log(allMovies);
   };
 
   return <button onClick={genresFiltered}>{genreItem.name}</button>;
