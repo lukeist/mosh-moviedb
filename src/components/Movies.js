@@ -13,6 +13,7 @@ const Movies = ({
   index,
   genreMovies,
   genreStatus,
+  setGenreStatus,
   filteredMoviesGenre,
   setFilteredMoviesGenre,
   getMovieList,
@@ -25,6 +26,7 @@ const Movies = ({
   ///////////////////////////////////////////////////////////////////////////////
   // Sorting
   const [sortStatus, setSortStatus] = useState(false);
+
   const tempAllMovies = [...allMovies];
   const tempGenreMovies = store
     .getState()
@@ -63,7 +65,11 @@ const Movies = ({
           genreType={genreType}
           allMovies={allMovies}
           genreStatus={genreStatus}
+          setGenreStatus={setGenreStatus}
           genreMovies={genreMovies}
+          setMoviesOnPages={setMoviesOnPages}
+          setFilteredMovies={setFilteredMovies}
+          getMovieList={getMovieList}
         />
         <table>
           <tbody>

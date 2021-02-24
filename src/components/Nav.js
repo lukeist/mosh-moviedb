@@ -1,11 +1,40 @@
 import store from "../store/configureStore";
 import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
-const Nav = ({ allMovies, genreStatus, genreMovies, genreType }) => {
+const Nav = ({
+  allMovies,
+  genreStatus,
+  setGenreStatus,
+  genreMovies,
+  genreType,
+  setMoviesOnPages,
+  setFilteredMovies,
+  getMovieList,
+}) => {
   const history = useHistory();
+
+  const handleSearch = (e) => {
+    const tempSearchedMovies = store
+      .getState()
+      .entities.movies.filter(
+        (movie) =>
+          movie.title.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1
+      );
+    setMoviesOnPages(getMovieList(tempSearchedMovies));
+    setFilteredMovies(getMovieList(tempSearchedMovies)[0]);
+    setGenreStatus(!genreStatus);
+  };
+
   return (
     <nav className="nav-bar">
-      <button onClick={() => history.push("/movies/new")}>New Movie</button>
+      <div>
+        <h3>Search a movie</h3>
+        <input label="Search" onChange={handleSearch}></input>
+      </div>
+      <div>
+        <button onClick={() => history.push("/movies/new")}>New Movie</button>
+      </div>
       {genreStatus ? (
         <div>
           {genreMovies.length > 0 ? (

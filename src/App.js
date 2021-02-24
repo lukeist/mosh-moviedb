@@ -16,6 +16,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const allMovies = useSelector((state) => state.entities.movies);
   const [itemPerPage, setItemPerPage] = useState(4); // For user to choose how many item per page to sort
+
   // Function to get allMovies or genreMovies
   const getMovieList = (movieList) => {
     const results = [];
@@ -69,6 +70,7 @@ function App() {
         <Route path="/movies">
           <Movies
             genreStatus={genreStatus}
+            setGenreStatus={setGenreStatus}
             allMovies={allMovies}
             filteredMovies={filteredMovies}
             setFilteredMovies={setFilteredMovies}

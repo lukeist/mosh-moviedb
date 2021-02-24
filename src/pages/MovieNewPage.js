@@ -1,13 +1,11 @@
 import InputForm from "../components/InputForm";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { movieAdded } from "../store/rMovies";
 import { useState } from "react";
 import { newMovieSchema } from "../helpers/validationSchema";
 
 const NewMovie = ({ history }) => {
   const dispatch = useDispatch();
-  const allMovies = useSelector((state) => state.entities.movies);
-
   const [movieDetails, setMovieDetails] = useState({
     title: "",
     genre: "",
@@ -86,7 +84,7 @@ const NewMovie = ({ history }) => {
         />
         <div className="dropdown-genres">
           <label>Genre</label>
-          <select id="genres" name="genres">
+          <select className="dropdown" id="genres" name="genres">
             <option value="Action">Action</option>
             <option value="Thriller">Thriller</option>
             <option value="Comedy">Comedy</option>
